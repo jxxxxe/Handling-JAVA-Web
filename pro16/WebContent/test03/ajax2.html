@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>도서 정보 출력창</title>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	function fn_process(){
+		$.ajax({
+			type:"post",
+			async:false, //동기식
+			url:"http://localhost:8090/pro16/ajaxTest2",
+			dataType:"xml", //응답 데이터를 텍스트로 지정
+			success: function(info,textStatus){//info : 응답받은 값
+				$(info).find("book").each(function(){
+					var title=$(this).find("title").text(); //전송된 XML 데이터에서 엘리먼트 이름으로 데이터 가져옴
+					var writer=$(this).find("writer").text();
+					var image=$(this).find("image").text();
+					$('#bookInfo').append(
+						"<p>"+title+"</p>"+
+						"<p>"+writer+"</p>"+
+						"<img src="+image+"/>"
+					);
+				});
+			},
+			error: function(data, textStatus){
+				alert("에러가 발생했습니다.");
+			},
+			complete: function(data, textStatus){
+				alert("작업을 완료했습니다.");
+			}
+		})
+	}
+</script>
+</head>
+<body>
+ <input type="button" value="도서 정보 요청" onClick="fn_process()"/><br><br>
+ <div id="bookInfo"></div>
+</body>
+</html>

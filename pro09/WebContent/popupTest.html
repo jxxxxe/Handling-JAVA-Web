@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트에서 쿠키 사용</title>
+<script type="text/javascript">
+window.onload=pageLoad; <!-- 브라우저에 페이지가 로드될 때 pageLoad()함수 호출 -->
+ function pageLoad(){
+	 notShowPop =getCookieValue();
+	   if(notShowPop!="true")
+	      window.open("popUp.html","pop","width=400,height=500,history=no,resizable=no,status=no,scrollbars=yes,menubar=no");
+	    }
+ function getCookieValue(){
+	 var result="false";
+	 if(document.cookie!=""){
+		 cookie=document.cookie.split(";"); <!-- document의 cookie 속성으로 쿠키 정보를 문자열로 가지고 옴-->
+		 									<!-- 가져온 정보를 ;로 ㅜㄴ리해 각각의 쿠키를 얻음 -->
+		 for(var i=0;i<cookie.length;i++){
+			 element=cookie[i].split("=");
+			 value=element[0];
+			 value=value.replace(/^\s*/,''); <!-- 정규식을 이용해 쿠키 이름 문자열의 공백(\s)제거 -->
+			 if (value=="notShowPop")	<!-- 여러 쿠키 중 notShowPop이름의 쿠키면 값을 가져옴-->
+				 result=element[1];
+		 }
+	 }
+
+	 return result
+ }
+ function deleteCookie(){
+	 document.cookie="notShowPop="+"false"+";path=/; expires=-1"; <!-- 쿠키 삭제 클릭 시 notShowPop 쿠키의 값을 false로 지정 -->
+ }
+</script>
+</head>
+<body>
+ <form>
+  <input type=button value="쿠키삭제" onClick="deleteCookie()">
+ </form>
+</body>
+</html>
