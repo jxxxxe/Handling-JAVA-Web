@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+   "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="calcTarget" class="com.spring.ex01.Calculator"/>		<!-- 타깃 클래스 빈 생성 -->
+	<bean id="logAdvice" class="com.spring.ex01.LoggingAdvice"/>	<!-- 어드바이스 빈 생성  -->
+	
+	<bean id="proxyCal" class="org.springframework.aop.framework.ProxyFactoryBean"> <!-- 타깃-어드바이스 엮기  -->
+		<property name="target" ref="calcTarget"/> <!-- 타깃 빈 지정 -->
+		<property name="interceptorNames"> <!-- 어드바이스빈 지정 -->
+			<list>
+				<value>logAdvice</value> <!-- 어드바이스빈, 타깃 클래스의 메서드 호출 시 이 빈을 실행 -->
+			</list>
+		</property>
+	</bean>
+</beans>
