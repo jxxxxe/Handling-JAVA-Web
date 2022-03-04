@@ -13,6 +13,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 			<transactionManager type="JDBC"/>
 			<dataSource type="POOLED">
 				<property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+				<property name="url" value="JDBC:oracle:thin:@localhost:1521:XE"/>
+				<property name="username" value="C##scott"/>
+				<property name="password" value="tiger"/>
 			</dataSource>
 		</environment>
 	</environments>

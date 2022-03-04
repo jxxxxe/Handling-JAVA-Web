@@ -17,15 +17,13 @@ isELIgnored="false" %>
       <td><b>이메일</b></td>
       <td><b>가입일</b></td>
    </tr>
-   <c:forEach var="mem" items="${membersList }">
-	   <tr align="center">
-	      <td>${mem.id}</td>
-	      <td>${mem.pwd}</td>
-	      <td>${mem.name}</td>
-	      <td>${mem.email}</td>
-	      <td>${mem.joinDate }</td>
-	    </tr>
-    </c:forEach>
+   <tr align="center">
+      <td>${mem.id}</td>
+      <td>${mem.pwd}</td>
+      <td>${mem.name}</td>
+      <td>${mem.email}</td>
+      <td>${mem.joinDate }</td>
+    </tr>
 </table>
 <a  href="${contextPath}/member/memberForm.do"><h1 style="text-align:center">회원가입</h1></a>
 </body>
