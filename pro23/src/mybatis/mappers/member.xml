@@ -32,4 +32,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[select * from t_member where pwd=#{pwd}]]>
 	</select>
 	
+	<insert id="insertMember" parameterType="memberVO">
+		<![CDATA[insert into t_member(id,pwd,name,email) values(#{id},#{pwd},#{name},#{email})]]>
+	</insert>
+	
+	<insert id="insertMember2" parameterType="java.util.HashMap">
+		<![CDATA[insert into t_member(id,pwd,name,email) values(#{id},#{pwd},#{name},#{email})]]>
+	</insert>
+	
+	<update id="updateMember" parameterType="MemberVO">
+		<![CDATA[update t_member set pwd=#{pwd}, name=#{name}, email=#{email} where id=#{id}]]>
+	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		<![CDATA[delete from t_member where id=#{id}]]>
+	</delete>
+	
+	
+	
+	<!-- 동적 sql문 -->
+	<sql id='a'>
+		<![CDATA[select * from t_member ]]>
+	</sql>
+	
+	
+	<select id="searchMember" parameterType="MemberVO" resultMap="memResult">
+		<!-- <![CDATA[select * from t_member]]> -->
+		<include refid='a'/>
+		<where>
+			<if test="name!='' and name!=null">
+				name=#{name}
+			</if>
+			<if test="email!='' and email!=null">
+				and email=#{email}
+			</if>
+		</where>
+		order by joinDate desc
+	</select>
+	
+	<select id="foreachSelect" parameterType="java.util.Map" resultMap="memResult">
+		<include refid='a'/>
+		where name in
+		<foreach item="item" collection="list" open=" (" close=")" separator=",">
+			#{item}
+		</foreach>
+		order by joinDate desc
+	</select>
+	
+	<insert id="foreachInsert" parameterType="java.util.Map">
+		<foreach item="item" collection="list" open="INSERT ALL" close="SELECT * FROM DUAL" separator=" ">
+			INTO t_member(id,pwd,name,email)
+			VALUES (#{item.id}, #{item.pwd}, #{item.name}, #{item.email})
+		</foreach>
+	</insert>
+	
+	<select id="selectLike" parameterType="String" resultMap="memResult">
+		<include refid="a"/>
+		<![CDATA[where name like '%' || #{name} || '%']]>
+	</select>
 </mapper>
