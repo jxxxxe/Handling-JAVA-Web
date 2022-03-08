@@ -11,23 +11,36 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<bean id="propertyPlaceholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	<property name="locations">
-		<list>
-			<value>/WEB-INF/config/jdbc.properties</value>
-		</list>
+		<value>/WEB-INF/config/jdbc.properties</value>
 	</property>
 </bean>
 
-<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-	<property name="driverClass" value="${jdbc.driverClassName}"></property>
+<!-- PropertyPlaceholderConfigurer 클래스를 이용해 db 설정 관련 정보를 jdbc.properties 파일에서 읽어들임 -->
+<bean id="dataSource" class="org.apache.ibatis.datasource.pooled.PooledDataSource">
+	<property name="driver" value="${jdbc.driverClassName}"></property>
 	<property name="url" value="${jdbc.url}"></property>
 	<property name="username" value="${jdbc.username}"></property>
 	<property name="password" value="${jdbc.password}"></property>
 </bean>
 
-<bean id="memberDAO" class="com.spring.member.dao.MemberDAOImpl">
+<!-- 마이바티스에서 제공하는 PooledDataSource 클래스를 이용해서 dataSource 빈을 생성 -->
+<!-- 스프링의 SqlSessionFactoryBean 클래스 빈을 생성하면서 member.xml(매퍼파일)과 
+modelConfig.xml(반환값을 저장할 빈 생성 설정 파일)을 읽어들임 -->
+<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	<property name="dataSource" ref="dataSource"/>
+	<property name="configLocation" value="classpath:mybatis/model/modelConfig.xml"/>
+	<property name="mapperLocation" value="classpath:mybatis/mappers/*.xml"/>
+</bean>
+
+
+<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+</bean>
+
+<bean id="memberDAO" class="com.spring.member.dao.MemberDAOImpl">
+	<property name="sqlSession" ref="sqlSession"/>
 </bean>
 
 </beans>
