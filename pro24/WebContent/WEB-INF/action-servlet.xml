@@ -13,18 +13,18 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<bean id="memberController" class="com.spring.member.controller.MemberControllerImpl">
 		<property name="methodNameResolver">
-			<ref local="methodResolver"/>
+			<ref local="memberMethodResolver"/>
 		</property>
 		<property name="memberService" ref="memberService"></property>
 	</bean>
 	
-	<bean id="methodResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+	<bean id="memberMethodResolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
 				<prop key="/member/listMembers.do">listMembers</prop>
 				<prop key="/member/addMember.do">addMember</prop>
-				<prop key="/member/memberForm.do">memberForm</prop>
-				<prop key="/member/memberDetail.do">memberDetail</prop>
+				<prop key="/member/removeMember.do">removeMember</prop>
+				<prop key="/member/memberForm.do">form</prop>
 			</props>
 		</property>
 	</bean>
@@ -43,7 +43,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-		<property name="prefix" value="/WEB-INF/views/member" />
+		<property name="prefix" value="/WEB-INF/view/member/" />
 		<property name="suffix" value=".jsp"/>
 	</bean>
 </beans>

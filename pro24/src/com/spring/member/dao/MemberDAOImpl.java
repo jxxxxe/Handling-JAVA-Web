@@ -29,12 +29,17 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public int insertMember(MemberVO memberVO) throws DataAccessException {
-		return sqlSession.insert("mapper.member.insertMember",memberVO);
+		int result=sqlSession.insert("mapper.member.insertMember",memberVO);
+		sqlSession.commit();
+		return result;
 	}
 
 	@Override
 	public int deleteMember(String id) throws DataAccessException {
-		return sqlSession.delete("mapper.member.deleteMember",id);
+		int result=sqlSession.delete("mapper.member.deleteMember",id);
+		sqlSession.commit();
+		
+		return result;
 	}
 
 

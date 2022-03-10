@@ -26,10 +26,10 @@ isELIgnored="false" %>
 	      <td>${mem.name}</td>
 	      <td>${mem.email}</td>
 	      <td>${mem.joinDate }</td>
-	      <td><a href="${contextPath}/mem4.do?action=deleteMember&id=${mem.id }">삭제하기</a></td>
+	      <td><a href="${contextPath}/member/removeMember.do?id=${mem.id }">삭제하기</a></td>
 	    </tr>
     </c:forEach>
 </table>
-<a  href="${contextPath}/test03/memberForm.jsp"><h1 style="text-align:center">회원가입</h1></a>
+<a  href="${contextPath}/member/memberForm.do"><h1 style="text-align:center">회원가입</h1></a>
 </body>
 </html>

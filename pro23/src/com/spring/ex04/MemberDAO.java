@@ -80,7 +80,6 @@ public class MemberDAO {
 		
 		int result=0;
 		result=session.insert("mapper.member.insertMember",memberVO);
-		session.commit();
 		
 		return result;
 	}
@@ -91,7 +90,6 @@ public class MemberDAO {
 		
 		int result=0;
 		result=session.insert("mapper.member.insertMember2",memberMap);
-		session.commit();
 		
 		return result;
 		
